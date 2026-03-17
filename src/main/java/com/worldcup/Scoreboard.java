@@ -1,6 +1,7 @@
 package com.worldcup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -14,6 +15,18 @@ public class Scoreboard {
         }
         if (awayTeam == null || awayTeam.isBlank()) {
             throw new IllegalArgumentException("Away team name cannot be null or empty");
+        }
+
+        boolean alreadyExists = false;
+        for (Match m : matches) {
+            if (m.getHomeTeam().equals(homeTeam) || m.getAwayTeam().equals(homeTeam)
+                    || m.getHomeTeam().equals(awayTeam) || m.getAwayTeam().equals(awayTeam)) {
+                alreadyExists = true;
+                break;
+            }
+        }
+        if (alreadyExists) {
+            throw new IllegalArgumentException("One or both teams are already in a match in progress");
         }
 
         matches.add(new Match(homeTeam, awayTeam));
@@ -51,6 +64,7 @@ public class Scoreboard {
         sorted.sort(Comparator.comparingInt(Match::getTotalScore)
                 .thenComparingInt(matches::indexOf)
                 .reversed());
-        return sorted;
+
+        return Collections.unmodifiableList(sorted);
     }
 }

@@ -50,6 +50,18 @@ public class ScoreboardTest {
     }
 
     @Test
+    void shouldThrowExceptionWhenMatchIsAlreadyInProgress() {
+        scoreboard.startMatch("Mexico", "Canada");
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "Canada"));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenTeamIsAlreadyPlaying() {
+        scoreboard.startMatch("Mexico", "Canada");
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "Brazil"));
+    }
+
+    @Test
     void shouldUpdateScore() {
         scoreboard.startMatch("Mexico", "Canada");
         scoreboard.updateScore("Mexico", "Canada", 1, 0);
