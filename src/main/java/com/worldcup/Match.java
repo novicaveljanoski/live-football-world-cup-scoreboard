@@ -30,6 +30,10 @@ public class Match {
         return awayScore;
     }
 
+    public int getTotalScore() {
+        return homeScore + awayScore;
+    }
+
     public void updateScore(int homeScore, int awayScore) {
         this.homeScore = homeScore;
         this.awayScore = awayScore;

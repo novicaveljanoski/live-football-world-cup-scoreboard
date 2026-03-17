@@ -1,6 +1,7 @@
 package com.worldcup;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Scoreboard {
@@ -46,6 +47,10 @@ public class Scoreboard {
     }
 
     public List<Match> getSummary() {
-        return matches;
+        List<Match> sorted = new ArrayList<>(matches);
+        sorted.sort(Comparator.comparingInt(Match::getTotalScore)
+                .thenComparingInt(matches::indexOf)
+                .reversed());
+        return sorted;
     }
 }
