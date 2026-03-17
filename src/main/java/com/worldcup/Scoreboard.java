@@ -35,6 +35,16 @@ public class Scoreboard {
         match.updateScore(homeScore, awayScore);
     }
 
+    public void finishMatch(String homeTeam, String awayTeam) {
+        for (Match m : matches) {
+            if (m.getHomeTeam().equals(homeTeam) && m.getAwayTeam().equals(awayTeam)) {
+                matches.remove(m);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Match not found");
+    }
+
     public List<Match> getSummary() {
         return matches;
     }

@@ -74,4 +74,17 @@ public class ScoreboardTest {
         scoreboard.startMatch("Mexico", "Canada");
         assertThrows(IllegalArgumentException.class, () -> scoreboard.updateScore("Mexico", "Canada", 0, -1));
     }
+
+    @Test
+    void shouldFinishMatch() {
+        scoreboard.startMatch("Mexico", "Canada");
+        scoreboard.finishMatch("Mexico", "Canada");
+
+        assertEquals(0, scoreboard.getSummary().size());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenFinishingNonExistentMatch() {
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.finishMatch("Mexico", "Canada"));
+    }
 }
